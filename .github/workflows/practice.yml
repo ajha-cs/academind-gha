@@ -1,22 +1,25 @@
 name: Deployment-Academind
-on: 
-    pull_request:
-        types:
-            - opened
-        branches:
-            - master
-            - "dev-*"
-            - "feat/**"    
-    workflow_dispatch:
+on:
     push:
         branches:
-            - master
-            - "dev-*"
-            - "feat/**"
-        paths-ignore:
-            - '.github/workflows/*' 
-jobs: 
-    deploy:
+            - main
+    # pull_request:
+    #     types:
+    #         - opened
+    #     branches:
+    #         - master
+    #         - "dev-*"
+    #         - "feat/**"    
+    # workflow_dispatch:
+    # push:
+    #     branches:
+    #         - master
+    #         - "dev-*"
+    #         - "feat/**"
+    #     paths-ignore:
+    #         - '.github/workflows/*' 
+jobs:
+    test:
         runs-on: ubuntu-latest
         steps:
             - name: Get a Code
@@ -25,7 +28,23 @@ jobs:
               run: npm ci
             - name: Test
               run: npm run test
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get a Code
+              uses: actions/checkout@v3
+            - name: Install deps
+              run: npm ci
             - name: Build
               run: npm run build
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get a Code
+              uses: actions/checkout@v3
+            - name: Install deps
+              run: npm ci
             - name: Deploy
               run: echo "Code deployed successfully!"
+
+            
