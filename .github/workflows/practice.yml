@@ -60,7 +60,7 @@ jobs:
             - name: Output contents
               run: ls    
             - name: Output Filename
-              run: echo "${{ needs.build.outputs.smthng }}"  
+              run: echo "${{ needs.build.outputs.script-file }}"  
             - name: Deploy
               run: echo "Code deployed successfully!"
 
