@@ -31,6 +31,9 @@ jobs:
     build:
         needs: test
         runs-on: ubuntu-latest
+        outputs:
+            script-file: ${{ steps.publish.outputs.smthng }}
+
         steps:
             - name: Get a Code
               uses: actions/checkout@v3
@@ -38,6 +41,9 @@ jobs:
               run: npm ci
             - name: Build
               run: npm run build
+            - name: Publish JS file-name
+              id: publish
+              run: find dist/assets/*.js -type f -execdir echo 'smthng={}' >> $GITHUB_OUTPUT ';'
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
               with:
@@ -53,6 +59,8 @@ jobs:
                 name: dist-files
             - name: Output contents
               run: ls    
+            - name: Output Filename
+              run: echo "${{ needs.build.outputs.smthng }}"  
             - name: Deploy
               run: echo "Code deployed successfully!"
 
