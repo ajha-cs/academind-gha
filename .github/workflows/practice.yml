@@ -2,7 +2,7 @@ name: Deployment-Academind
 on:
     push:
         branches:
-            - main
+            - master
     # pull_request:
     #     types:
     #         - opened
